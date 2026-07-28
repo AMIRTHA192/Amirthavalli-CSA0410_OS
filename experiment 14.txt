@@ -1,0 +1,69 @@
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char file[20][30], fname[30];
+    int n, i, choice, found;
+
+    printf("Enter the number of files: ");
+    scanf("%d", &n);
+
+    printf("Enter the file names:\n");
+    for(i = 0; i < n; i++)
+    {
+        scanf("%s", file[i]);
+    }
+
+    do
+    {
+        printf("\n----- Single Level Directory -----\n");
+        printf("1. Display Files\n");
+        printf("2. Search File\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch(choice)
+        {
+            case 1:
+                printf("\nFiles in the Directory:\n");
+                for(i = 0; i < n; i++)
+                {
+                    printf("%s\n", file[i]);
+                }
+                break;
+
+            case 2:
+                found = 0;
+                printf("Enter file name to search: ");
+                scanf("%s", fname);
+
+                for(i = 0; i < n; i++)
+                {
+                    if(strcmp(file[i], fname) == 0)
+                    {
+                        found = 1;
+                        break;
+                    }
+                }
+
+                if(found)
+                    printf("File Found.\n");
+                else
+                    printf("File Not Found.\n");
+
+                break;
+
+            case 3:
+                printf("Exiting...\n");
+                break;
+
+            default:
+                printf("Invalid Choice.\n");
+        }
+
+    } while(choice != 3);
+
+    return 0;
+}

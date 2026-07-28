@@ -1,0 +1,97 @@
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    int users, files[10];
+    char dirname[10][20];
+    char filename[10][10][20];
+    char searchdir[20], searchfile[20];
+    int i, j, choice, found;
+
+    printf("Enter the number of directories (users): ");
+    scanf("%d", &users);
+
+    for(i = 0; i < users; i++)
+    {
+        printf("\nEnter directory name: ");
+        scanf("%s", dirname[i]);
+
+        printf("Enter number of files in %s: ", dirname[i]);
+        scanf("%d", &files[i]);
+
+        printf("Enter file names:\n");
+        for(j = 0; j < files[i]; j++)
+        {
+            scanf("%s", filename[i][j]);
+        }
+    }
+
+    do
+    {
+        printf("\n------ Two Level Directory ------\n");
+        printf("1. Display Directory Structure\n");
+        printf("2. Search File\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch(choice)
+        {
+            case 1:
+                printf("\nDirectory Structure:\n");
+
+                for(i = 0; i < users; i++)
+                {
+                    printf("\nDirectory: %s\n", dirname[i]);
+
+                    for(j = 0; j < files[i]; j++)
+                    {
+                        printf("  %s\n", filename[i][j]);
+                    }
+                }
+                break;
+
+            case 2:
+                found = 0;
+
+                printf("Enter directory name: ");
+                scanf("%s", searchdir);
+
+                printf("Enter file name: ");
+                scanf("%s", searchfile);
+
+                for(i = 0; i < users; i++)
+                {
+                    if(strcmp(dirname[i], searchdir) == 0)
+                    {
+                        for(j = 0; j < files[i]; j++)
+                        {
+                            if(strcmp(filename[i][j], searchfile) == 0)
+                            {
+                                found = 1;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if(found)
+                    printf("File Found.\n");
+                else
+                    printf("File Not Found.\n");
+
+                break;
+
+            case 3:
+                printf("Exiting...\n");
+                break;
+
+            default:
+                printf("Invalid Choice.\n");
+        }
+
+    } while(choice != 3);
+
+    return 0;
+}

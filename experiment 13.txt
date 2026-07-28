@@ -1,0 +1,117 @@
+#include <stdio.h>
+
+int main()
+{
+    int block[20], process[20];
+    int b, p;
+    int i, j;
+
+    printf("Enter the number of memory blocks: ");
+    scanf("%d", &b);
+
+    printf("Enter the size of each memory block:\n");
+    for(i = 0; i < b; i++)
+        scanf("%d", &block[i]);
+
+    printf("Enter the number of processes: ");
+    scanf("%d", &p);
+
+    printf("Enter the size of each process:\n");
+    for(i = 0; i < p; i++)
+        scanf("%d", &process[i]);
+
+    /*---------------- First Fit ----------------*/
+    printf("\n===== FIRST FIT =====\n");
+
+    int firstBlock[20];
+    for(i = 0; i < b; i++)
+        firstBlock[i] = block[i];
+
+    for(i = 0; i < p; i++)
+    {
+        int allocated = 0;
+        for(j = 0; j < b; j++)
+        {
+            if(firstBlock[j] >= process[i])
+            {
+                printf("Process %d (%d KB) --> Block %d\n",
+                       i+1, process[i], j+1);
+                firstBlock[j] -= process[i];
+                allocated = 1;
+                break;
+            }
+        }
+
+        if(!allocated)
+            printf("Process %d (%d KB) --> Not Allocated\n",
+                   i+1, process[i]);
+    }
+
+    /*---------------- Best Fit ----------------*/
+    printf("\n===== BEST FIT =====\n");
+
+    int bestBlock[20];
+    for(i = 0; i < b; i++)
+        bestBlock[i] = block[i];
+
+    for(i = 0; i < p; i++)
+    {
+        int best = -1;
+
+        for(j = 0; j < b; j++)
+        {
+            if(bestBlock[j] >= process[i])
+            {
+                if(best == -1 || bestBlock[j] < bestBlock[best])
+                    best = j;
+            }
+        }
+
+        if(best != -1)
+        {
+            printf("Process %d (%d KB) --> Block %d\n",
+                   i+1, process[i], best+1);
+            bestBlock[best] -= process[i];
+        }
+        else
+        {
+            printf("Process %d (%d KB) --> Not Allocated\n",
+                   i+1, process[i]);
+        }
+    }
+
+    /*---------------- Worst Fit ----------------*/
+    printf("\n===== WORST FIT =====\n");
+
+    int worstBlock[20];
+    for(i = 0; i < b; i++)
+        worstBlock[i] = block[i];
+
+    for(i = 0; i < p; i++)
+    {
+        int worst = -1;
+
+        for(j = 0; j < b; j++)
+        {
+            if(worstBlock[j] >= process[i])
+            {
+                if(worst == -1 || worstBlock[j] > worstBlock[worst])
+                    worst = j;
+            }
+        }
+
+        if(worst != -1)
+        {
+            printf("Process %d (%d KB) --> Block %d\n",
+                   i+1, process[i], worst+1);
+            worstBlock[worst] -= process[i];
+        }
+        else
+        {
+            printf("Process %d (%d KB) --> Not Allocated\n",
+                   i+1, process[i]);
+        }
+    }
+
+    return 0;
+}s
