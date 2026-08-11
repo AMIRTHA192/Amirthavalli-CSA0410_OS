@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char filename[50];
+    char data[100];
+    char buffer[100];
+
+    printf("Enter file name: ");
+    scanf("%s", filename);
+
+    printf("Enter data to write into the file: ");
+    scanf(" %[^\n]", data);
+
+    /* Simulating open() */
+    printf("\nFile opened successfully.\n");
+
+    /* Simulating write() */
+    strcpy(buffer, data);
+    printf("Data written successfully.\n");
+
+    /* Simulating read() */
+    printf("Data read from file: %s\n", buffer);
+
+    /* Simulating close() */
+    printf("File closed successfully.\n");
+
+    return 0;
+}
