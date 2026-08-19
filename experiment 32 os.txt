@@ -1,0 +1,115 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int requests[100];
+    int n, head, diskSize, direction;
+    int i, j, temp;
+    int totalMovement = 0;
+
+    printf("Enter number of disk requests: ");
+    scanf("%d", &n);
+
+    printf("Enter disk request queue:\n");
+
+    for (i = 0; i < n; i++)
+        scanf("%d", &requests[i]);
+
+    printf("Enter initial head position: ");
+    scanf("%d", &head);
+
+    printf("Enter disk size: ");
+    scanf("%d", &diskSize);
+
+    printf("Enter direction (0 = left, 1 = right): ");
+    scanf("%d", &direction);
+
+    /* Sort the request queue */
+    for (i = 0; i < n - 1; i++)
+    {
+        for (j = i + 1; j < n; j++)
+        {
+            if (requests[i] > requests[j])
+            {
+                temp = requests[i];
+                requests[i] = requests[j];
+                requests[j] = temp;
+            }
+        }
+    }
+
+    printf("\nSCAN Disk Scheduling\n");
+    printf("Seek Sequence: %d", head);
+
+    if (direction == 1)
+    {
+        /* Move towards right */
+        for (i = 0; i < n; i++)
+        {
+            if (requests[i] >= head)
+            {
+                totalMovement += abs(head - requests[i]);
+                head = requests[i];
+                printf(" -> %d", head);
+            }
+        }
+
+        /* Go to the right end */
+        if (head != diskSize - 1)
+        {
+            totalMovement += abs(head - (diskSize - 1));
+            head = diskSize - 1;
+            printf(" -> %d", head);
+        }
+
+        /* Reverse direction */
+        for (i = n - 1; i >= 0; i--)
+        {
+            if (requests[i] < head)
+            {
+                totalMovement += abs(head - requests[i]);
+                head = requests[i];
+                printf(" -> %d", head);
+            }
+        }
+    }
+    else
+    {
+        /* Move towards left */
+        for (i = n - 1; i >= 0; i--)
+        {
+            if (requests[i] <= head)
+            {
+                totalMovement += abs(head - requests[i]);
+                head = requests[i];
+                printf(" -> %d", head);
+            }
+        }
+
+        /* Go to the left end */
+        if (head != 0)
+        {
+            totalMovement += head;
+            head = 0;
+            printf(" -> %d", head);
+        }
+
+        /* Reverse direction */
+        for (i = 0; i < n; i++)
+        {
+            if (requests[i] > head)
+            {
+                totalMovement += abs(head - requests[i]);
+                head = requests[i];
+                printf(" -> %d", head);
+            }
+        }
+    }
+
+    printf("\n");
+
+    printf("\nTotal Head Movement = %d cylinders\n", totalMovement);
+
+    return 0;
+}
