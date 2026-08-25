@@ -1,0 +1,39 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int request[50], n, head;
+    int i, movement, total = 0;
+
+    printf("Enter number of requests: ");
+    scanf("%d", &n);
+
+    printf("Enter request queue:\n");
+
+    for(i = 0; i < n; i++)
+        scanf("%d", &request[i]);
+
+    printf("Enter initial head position: ");
+    scanf("%d", &head);
+
+    printf("\nHead movement:\n");
+
+    for(i = 0; i < n; i++)
+    {
+        movement = abs(head - request[i]);
+
+        printf("%d -> %d = %d\n",
+               head, request[i], movement);
+
+        total += movement;
+        head = request[i];
+    }
+
+    printf("\nTotal head movement = %d", total);
+    printf("\nAverage head movement = %.2f\n",
+           (float)total / n);
+
+    return 0;
+}
